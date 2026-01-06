@@ -3,19 +3,18 @@ package net.engineeringdigest.journalApp.entity;
 import lombok.Data;
 import lombok.NonNull;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
-
-@Document(collection = "journal_entities")
+@Document(collection = "users")
 @Data
-public class JournalEntity {
+public class UserEntity {
 
     @Id
     private String id;
+    @Indexed(unique = true)
     @NonNull
-    private String title;
-    private String content;
-    private LocalDateTime date;
-
+    private String userName;
+    @NonNull
+    private String password;
 }

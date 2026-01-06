@@ -38,7 +38,6 @@ public class JournalEntryControllerV2 {
 
     @PostMapping
     public ResponseEntity<JournalEntity> createEntry(@RequestBody JournalEntity newEntry){
-        newEntry.setDate(LocalDateTime.now());
         journalEntryService.saveEntry(newEntry);
         return ResponseEntity.status(201).body(newEntry);
         // OR
