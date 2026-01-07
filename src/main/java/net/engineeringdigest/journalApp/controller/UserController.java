@@ -44,12 +44,9 @@ public class UserController {
         }
     }
 
-    @PutMapping("/id/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable String id, @RequestBody UserEntity user){
-        if(id.trim().isEmpty()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        UserEntity oldUser = userService.findById(id).orElse(null);
+    @PutMapping
+    public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity user){
+        UserEntity oldUser = userService.findByUsername(user.getUserName());
         if(oldUser == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
