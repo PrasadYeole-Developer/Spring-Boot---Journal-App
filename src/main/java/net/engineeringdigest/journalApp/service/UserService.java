@@ -1,10 +1,8 @@
 package net.engineeringdigest.journalApp.service;
 
 import lombok.extern.slf4j.Slf4j;
-import net.engineeringdigest.journalApp.entity.JournalEntity;
 import net.engineeringdigest.journalApp.entity.UserEntity;
 import net.engineeringdigest.journalApp.repository.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,4 +31,5 @@ public class UserService {
     public void deleteUser(String id){
         userRepository.deleteById(id);
     }
+
 }
