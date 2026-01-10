@@ -20,11 +20,8 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserEntity>> getUsers(){
-        List<UserEntity> users = userService.getUsers();
-        if(users.isEmpty()){
-            return ResponseEntity.status(404).build();
-        }
         try{
+            List<UserEntity> users = userService.getUsers();
             return ResponseEntity.status(200).body(users);
         } catch (Exception e) {
             log.error("Exception: ", e);
@@ -46,12 +43,13 @@ public class UserController {
 
     @PutMapping("/{username}")
     public ResponseEntity<UserEntity> updateUser(@PathVariable String username, @RequestBody UserEntity user){
-        UserEntity oldUser = userService.findByUsername(username);
-        if(oldUser == null){
+        try{
+            UserEntity oldUser = userService.findByUsername(username);
+            if(oldUser == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if(user.getUserName() != null && !user.getUserName().isEmpty()){
-            oldUser.setUserName(user.getUserName());
+        if(user.getUsername() != null && !user.getUsername().isEmpty()){
+            oldUser.setUsername(user.getUsername());
         }
 
         if(user.getPassword() != null && !user.getPassword().isEmpty()){
@@ -59,6 +57,11 @@ public class UserController {
         }
         userService.saveUser(oldUser);
         return new ResponseEntity<>(oldUser,HttpStatus.OK);
+        }
+        catch (Exception e) {
+            log.error("Exception: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 }

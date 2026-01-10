@@ -33,7 +33,7 @@ public class UserService {
     }
 
     public UserEntity findByUsername(String username){
-        return userRepository.findByUserName(username);
+        return userRepository.findByUsername(username);
     }
 
 }
