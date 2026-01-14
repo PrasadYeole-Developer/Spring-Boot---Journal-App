@@ -26,7 +26,7 @@ public class JournalEntryService {
         journalEntry.setDate(LocalDateTime.now());
         JournalEntity entry = journalEntryRepository.save(journalEntry);
         user.getJournalEntries().add(entry);
-        userService.saveUser(user);
+        userService.saveNewUser(user);
     }
 
     public void saveEntry(JournalEntity journalEntry){
@@ -44,8 +44,10 @@ public class JournalEntryService {
     @Transactional
     public void deleteById(String id, String username){
         UserEntity user = userService.findByUsername(username);
-        user.getJournalEntries().removeIf(x -> x.getId().equals(id));
-        userService.saveUser(user);
-        journalEntryRepository.deleteById(id);
+        boolean removed = user.getJournalEntries().removeIf(x -> x.getId().equals(id));
+        if(removed){
+            userService.saveNewUser(user);
+            journalEntryRepository.deleteById(id);
+        }
     }
 }
