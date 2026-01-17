@@ -11,8 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Slf4j
 @RestController
 @RequestMapping("/users")
@@ -22,17 +20,6 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
-
-    @GetMapping
-    public ResponseEntity<List<UserEntity>> getUsers(){
-        try{
-            List<UserEntity> users = userService.getUsers();
-            return ResponseEntity.status(200).body(users);
-        } catch (Exception e) {
-            log.error("Exception: ", e);
-            return ResponseEntity.status(500).build();
-        }
-    }
 
     @PutMapping("update-user")
     public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity user){
